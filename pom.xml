@@ -66,6 +66,13 @@
             <artifactId>webdrivermanager</artifactId>
             <version>3.6.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -81,6 +88,9 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.1</version>
                 <configuration>
+                    <!-- Parallel execution in the same JVM -->
+                    <parallel>methods</parallel>
+                    <threadCount>10</threadCount>
                     <includes>
                         <include>AcceptanceTestSuite.java</include>
 <!--                        <include>**/*Test.java</include>-->

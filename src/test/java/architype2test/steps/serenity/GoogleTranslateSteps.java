@@ -3,7 +3,8 @@ package architype2test.steps.serenity;
 import architype2test.pages.GoogleTranslatePage;
 import net.thucydides.core.annotations.Step;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class GoogleTranslateSteps {
     GoogleTranslatePage googleTranslatePage;
@@ -18,10 +19,17 @@ public class GoogleTranslateSteps {
         googleTranslatePage.choseLanguge(source, target);
     }
 
-//    @Step("the user looks up the translation of the word '$definition'")
+    //    @Step("the user looks up the translation of the word '$definition'")
     @Step
     public void shouldSeeText(String text) {
-        assertEquals(googleTranslatePage.getTranslatedText(), text);
+        assertThat(googleTranslatePage.getTranslatedText()).as("The text is not match: " + googleTranslatePage.getTranslatedText()).isEqualTo(text);
+    }
+
+    @Step
+    public void shouldSeeDefinition(String text) {
+        assertThat(googleTranslatePage.getDefinitionText(text)).as("The text is not match: " + googleTranslatePage.getDefinitionText(text))
+                .isEqualTo("the tree which bears apples.");
+
     }
 
     @Step
@@ -31,6 +39,6 @@ public class GoogleTranslateSteps {
 
     @Step
     public void detectedTextShouldHaveLangth(String detectedText, int length) {
-        assertEquals(detectedText.length(), length);
+        assertThat(detectedText.length()).as("Text lengtht is not the same").isEqualTo(length);
     }
 }

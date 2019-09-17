@@ -9,7 +9,7 @@ import javax.security.auth.login.Configuration;
 import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_DRIVER;
 import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_PROVIDED_TYPE;
 
-//@Metafilter("+my")
+@Metafilter("+my")
 public class AcceptanceTestSuite extends SerenityStories {
     private DriverConfiguration configuration;
 

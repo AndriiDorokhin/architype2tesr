@@ -5,10 +5,12 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 
+import java.util.List;
+
 @DefaultUrl("https://translate.google.ru")
 public class GoogleTranslatePage extends PageObject {
 
-    private String LOCATOR = "//div[@class='language-list-unfiltered-langs-sl_list']//div[text()='%s']";
+    private String LOCATOR = "//div[@class='language-list-unfiltered-langs-sl_list']//div[text()='%s']/parent::div";
 
     @FindBy(css = "div.sl-more.tlid-open-source-language-list[role=button]")
     private WebElementFacade leftLangugeOptions;
@@ -28,23 +30,32 @@ public class GoogleTranslatePage extends PageObject {
     @FindBy(css = "div.text-wrap.tlid-copy-target span[title]")
     private WebElementFacade rightTextArea;
 
+    @FindBy(css = "div.gt-def-info div.gt-def-row")
+    private List<WebElementFacade> definitions;
+
     public GoogleTranslatePage choseLanguge(String source, String target) {
         leftLangugeOptions.click();
 
         try {
             findBy(String.format(LOCATOR, source)).click();
-        }catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         rightLangugeOptions.click();
 
-        try {
-            findBy(String.format(LOCATOR, target)).click();
-        }catch(Exception e) {}
+        WebElementFacade el = findBy(String.format("//div[text()='Все языки']/parent::div//div[contains(@aria-label,'%s')]", target));
+        evaluateJavascript("arguments[0].scrollIntoView(true);", el);
+        el.click();
 
         return this;
     }
 
     public GoogleTranslatePage enterKeywords(String keyword) {
+        lefttTextArea.typeAndEnter(keyword);
+        return this;
+    }
+
+    public GoogleTranslatePage getTextFromField(String keyword) {
         lefttTextArea.type(keyword);
         return this;
     }
@@ -53,4 +64,24 @@ public class GoogleTranslatePage extends PageObject {
         return rightTextArea.getText();
     }
 
+    public String getTextFromSide(Side side) {
+        if (side == Side.LEFT) {
+            return lefttTextArea.getText();
+        } else {
+            return rightTextArea.getText();
+        }
+    }
+
+    public String getDefinitionText(String textForCompare) {
+        for (WebElementFacade defEl : definitions) {
+            if (defEl.getText().equalsIgnoreCase(textForCompare))
+                return defEl.getText();
+        }
+        return null;
+    }
+
+    public enum Side {
+        LEFT,
+        RIGHT
+    }
 }
