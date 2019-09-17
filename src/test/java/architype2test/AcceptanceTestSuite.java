@@ -4,8 +4,6 @@ import net.serenitybdd.jbehave.SerenityStories;
 import net.serenitybdd.jbehave.annotations.Metafilter;
 import net.thucydides.core.webdriver.DriverConfiguration;
 
-import javax.security.auth.login.Configuration;
-
 import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_DRIVER;
 import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_PROVIDED_TYPE;
 
@@ -13,7 +11,7 @@ import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_PROVIDED_TY
 public class AcceptanceTestSuite extends SerenityStories {
     private DriverConfiguration configuration;
 
-    public AcceptanceTestSuite(){
+    public AcceptanceTestSuite() {
         configuration = super.getSystemConfiguration();
 
         configuration.setIfUndefined(WEBDRIVER_DRIVER.getPropertyName(), "provided");

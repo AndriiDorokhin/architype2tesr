@@ -73,11 +73,16 @@ public class GoogleTranslatePage extends PageObject {
     }
 
     public String getDefinitionText(String textForCompare) {
+        String tmpString = "";
+
         for (WebElementFacade defEl : definitions) {
-            if (defEl.getText().equalsIgnoreCase(textForCompare))
+            tmpString = defEl.getText();
+
+            if (tmpString.equalsIgnoreCase(textForCompare))
                 return defEl.getText();
         }
-        return null;
+
+        return tmpString;
     }
 
     public enum Side {
