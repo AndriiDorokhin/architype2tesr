@@ -9,6 +9,7 @@ import static net.thucydides.core.ThucydidesSystemProperty.WEBDRIVER_PROVIDED_TY
 
 @Metafilter("+my")
 public class AcceptanceTestSuite extends SerenityStories {
+
     private DriverConfiguration configuration;
 
     public AcceptanceTestSuite() {
