@@ -74,34 +74,83 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.1</version>
-                <configuration>
-                    <!-- Parallel execution in the same JVM -->
-                    <parallel>methods</parallel>
-                    <threadCount>10</threadCount>
-                    <includes>
-                        <include>AcceptanceTestSuite.java</include>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>2.22.1</version>-->
+<!--                <configuration>-->
+<!--                    <skip>true</skip>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                <version>2.22.1</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; Parallel execution in the same JVM &ndash;&gt;-->
+<!--                    <parallel>methods</parallel>-->
+<!--                    <threadCount>10</threadCount>-->
+<!--                    <includes>-->
+<!--                        <include>AcceptanceTestSuite.java</include>-->
 <!--                        <include>**/*Test.java</include>-->
 <!--                        <include>**/*TestSuite.java</include>-->
 <!--                        <include>**/Test*.java</include>-->
 <!--                        <include>**/When*.java</include>-->
+<!--                    </includes>-->
+<!--                    <argLine>-Xmx512m</argLine>-->
+<!--&lt;!&ndash;                    <systemPropertyVariables>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <webdriver.driver>${webdriver.driver}</webdriver.driver>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </systemPropertyVariables>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>integration-test</goal>-->
+<!--                            <goal>verify</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.2</version>-->
+<!--                <configuration>-->
+<!--                    <source>1.8</source>-->
+<!--                    <target>1.8</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>net.serenity-bdd.maven.plugins</groupId>-->
+<!--                <artifactId>serenity-maven-plugin</artifactId>-->
+<!--                <version>${serenity.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>serenity-reports</id>-->
+<!--                        <phase>post-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>aggregate</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <argLine>-Xmx1024m</argLine>
+                    <includes>
+                        <include>AcceptanceTestSuite.java</include>
                     </includes>
-                    <argLine>-Xmx512m</argLine>
-<!--                    <systemPropertyVariables>-->
-<!--                        <webdriver.driver>${webdriver.driver}</webdriver.driver>-->
-<!--                    </systemPropertyVariables>-->
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
                 <executions>
                     <execution>
@@ -115,8 +164,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.7.0</version>
                 <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
@@ -124,7 +176,7 @@
             <plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
+                <version>2.0.56</version>
                 <executions>
                     <execution>
                         <id>serenity-reports</id>
